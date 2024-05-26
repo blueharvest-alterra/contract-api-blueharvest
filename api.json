@@ -86,7 +86,7 @@
                 "email": {
                   "type": "string",
                   "format": "email",
-                  "example": "customerblueharvest@gmail.com"
+                  "example": "johndoe@gmail.com"
                 },
                 "password": {
                   "type": "string",
@@ -125,7 +125,7 @@
                     "properties": {
                       "token": {
                         "type": "string",
-                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6ImN1c3RvbWVyIGJsdWVoYXJ2ZXN0IiwiaWF0IjoxNTE2MjM5MDIyfQ.b3-g-GbzDl_5vLD_c5wm9h3XWYvObXFobLt_tXwVcxE"
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
                       }
                     }
                   }
@@ -153,6 +153,10 @@
                         "example": "Email atau password salah"
                       }
                     }
+                  },
+                  "data": {
+                    "type": "string",
+                    "example": null
                   }
                 }
               }
@@ -174,48 +178,167 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "username": {
-                    "type": "string"
-                  },
-                  "password": {
-                    "type": "string"
+                  "fullname": {
+                    "type": "string",
+                    "example": "John Doe"
                   },
                   "email": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "johndoe@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password123!"
                   }
                 },
-                "required": ["username", "password", "email"]
+                "required": ["fullname", " email", "password"]
               }
             }
           }
         },
         "responses": {
-          "201": {
-            "description": "User created successfully",
+          "200": {
+            "description": "Successful login",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
+                    "info": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Berhasil Registrasi"
+                        }
+                      }
                     },
-                    "username": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string"
+                    "data": {
+                      "type": "string",
+                      "example": null
                     }
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad Request"
+          "401": {
+            "description": "Email Already Exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "info": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Email sudah didaftarkan"
+                        }
+                      }
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User Profile",
+        "description": "get user profile",
+        "responses": {
+          "200": {
+            "description": "Successful get user profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "info": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Berhasil Mendapatkan Data Pengguna"
+                        }
+                      }
+                    },
+                    "data": {
+                      "type": "object",
+                       "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "6d7c1ee0-2ea1-450d-ae3d-73750bcf960a"
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "johndoe@gmail.com"
+                          },
+                          "fullname": {
+                            "type": "string",
+                            "example": "John Doe"
+                          }
+                       }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "info": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Pengguna Tidak Ditemukan"
+                        }
+                      }
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     }
+
+
   }
 }
