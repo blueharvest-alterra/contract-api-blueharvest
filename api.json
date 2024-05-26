@@ -1,0 +1,221 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Blueharvest",
+    "version": "1.0",
+    "description": "This is the API for the Blueharvest application"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3123/api",
+      "description": "Development server"
+    },
+    {
+      "url": "https://blueharvest.com/api",
+      "description": "Production server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authentication related endpoints"
+    },
+    {
+      "name": "Address",
+      "description": "Address related endpoints"
+    },
+    {
+      "name": "Customer Address",
+      "description": "Customer Address related endpoints"
+    },
+    {
+      "name": "Product",
+      "description": "Product related endpoints"
+    },
+    {
+      "name": "Farm",
+      "description": "Farm related endpoints"
+    },
+    {
+      "name": "Farm Monitor",
+      "description": "Farm Monitor related endpoints"
+    },
+    {
+      "name": "Farm Invest",
+      "description": "Farm Invest related endpoints"
+    },
+    {
+      "name": "Article",
+      "description": "Article related endpoints"
+    },
+    {
+      "name": "Promo",
+      "description": "Promo related endpoints"
+    },
+    {
+      "name": "Courier",
+      "description": "Courier related endpoints"
+    },
+    {
+      "name": "Transaction",
+      "description": "Transaction related endpoints"
+    },
+    {
+      "name": "Transaction Detail",
+      "description": "Transaction Detail related endpoints"
+    },
+    {
+      "name": "Cart",
+      "description": "Cart related endpoints"
+    }
+
+  ],
+  "paths": {
+  "/login": {
+    "post": {
+      "tags": ["Auth"],
+      "summary": "User login",
+      "description": "Authenticate user and return token",
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "format": "email",
+                  "example": "customerblueharvest@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "format": "password",
+                  "example": "password123!"
+                }
+              },
+              "required": ["email", "password"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Successful login",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "info": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "Berhasil Login"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "token": {
+                        "type": "string",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6ImN1c3RvbWVyIGJsdWVoYXJ2ZXN0IiwiaWF0IjoxNTE2MjM5MDIyfQ.b3-g-GbzDl_5vLD_c5wm9h3XWYvObXFobLt_tXwVcxE"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Wrong Email Or Password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "info": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "Email atau password salah"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+    "/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "description": "Create a new user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "required": ["username", "password", "email"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  }
+}
