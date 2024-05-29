@@ -3,16 +3,16 @@
   "info": {
     "title": "Blueharvest",
     "version": "1.0",
-    "description": "This is the API for the Blueharvest application"
+    "description": "This is the API Contract for the Blueharvest application. If you need to find implemented or available API please go to Postman API Documentation."
   },
   "servers": [
     {
-      "url": "http://localhost:3123/api",
-      "description": "Development server"
+      "url": "https://blueharvest.irvansn.com",
+      "description": "Production server"
     },
     {
-      "url": "https://blueharvest.com/api",
-      "description": "Production server"
+      "url": "http://localhost:8080",
+      "description": "Development server"
     }
   ],
   "tags": [
@@ -68,14 +68,13 @@
       "name": "Cart",
       "description": "Cart related endpoints"
     }
-
   ],
   "paths": {
-  "/login": {
+  "/v1/login/customer": {
     "post": {
       "tags": ["Auth"],
-      "summary": "User login",
-      "description": "Authenticate user and return token",
+      "summary": "Customer login",
+      "description": "Successfully Customer logged in. Please store the token authentication credentials securely.",
       "requestBody": {
         "required": true,
         "content": {
@@ -83,6 +82,11 @@
             "schema": {
               "type": "object",
               "properties": {
+                "full_name": {
+                  "type": "string",
+                  "format": "email",
+                  "example": "John Doe"
+                },
                 "email": {
                   "type": "string",
                   "format": "email",
@@ -101,29 +105,36 @@
       },
       "responses": {
         "200": {
-          "description": "Successful login",
+          "description": "200 (OK)",
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "info": {
-                    "type": "object",
-                    "properties": {
-                      "success": {
-                        "type": "boolean",
-                        "example": true
-                      },
-                      "message": {
-                        "type": "string",
-                        "example": "Berhasil Login"
-                      }
-                    }
+                  "status": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "Berhasil Login"
                   },
                   "data": {
                     "type": "object",
                     "properties": {
-                      "token": {
+                      "id": {
+                        "type": "string",
+                        "example": "d9ad783c-1890-4c27-b891-997af32c4dab"
+                      },
+                      "full_name": {
+                        "type": "string",
+                        "example": "John Doe"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "johndoe@gmail.com"
+                      },
+                      "user_token": {
                         "type": "string",
                         "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
                       }
@@ -134,29 +145,40 @@
             }
           }
         },
-        "401": {
-          "description": "Wrong Email Or Password",
+        "400": {
+          "description": "Some of input are empty",
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "info": {
-                    "type": "object",
-                    "properties": {
-                      "success": {
-                        "type": "boolean",
-                        "example": false
-                      },
-                      "message": {
-                        "type": "string",
-                        "example": "Email atau password salah"
-                      }
-                    }
+                  "status": {
+                    "type": "boolean",
+                    "example": true
                   },
-                  "data": {
+                  "message": {
                     "type": "string",
-                    "example": null
+                    "example": "input cannot be empty"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid Email or Password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "invalid email or password"
                   }
                 }
               }
@@ -166,11 +188,11 @@
       }
     }
   },
-    "/register": {
+    "/v1/register/customer": {
       "post": {
         "tags": ["Auth"],
-        "summary": "User registration",
-        "description": "Create a new user",
+        "summary": "Customer registration",
+        "description": "Register Customer",
         "requestBody": {
           "required": true,
           "content": {
@@ -204,51 +226,54 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "info": {
-                      "type": "object",
-                      "properties": {
-                        "success": {
-                          "type": "boolean",
-                          "example": true
-                        },
-                        "message": {
-                          "type": "string",
-                          "example": "Berhasil Registrasi"
-                        }
-                      }
+                    "status": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Berhasil Login"
                     },
                     "data": {
-                      "type": "string",
-                      "example": null
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "d9ad783c-1890-4c27-b891-997af32c4dab"
+                        },
+                        "full_name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "johndoe@gmail.com"
+                        },
+                        "user_token": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "401": {
-            "description": "Email Already Exist",
+          "400": {
+            "description": "Email already exist in the database, use another email. Possible som of input empty.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "info": {
-                      "type": "object",
-                      "properties": {
-                        "success": {
-                          "type": "boolean",
-                          "example": false
-                        },
-                        "message": {
-                          "type": "string",
-                          "example": "Email sudah didaftarkan"
-                        }
-                      }
+                    "status": {
+                      "type": "boolean",
+                      "example": true
                     },
-                    "data": {
+                    "message": {
                       "type": "string",
-                      "example": null
+                      "example": "duplicated data"
                     }
                   }
                 }
@@ -258,48 +283,67 @@
         }
       }
     },
-    "/profile": {
+    "/v1/login/admin": {
       "post": {
         "tags": ["Auth"],
-        "summary": "User Profile",
-        "description": "get user profile",
+        "summary": "Admin login",
+        "description": "User Admin Login",
         "responses": {
           "200": {
-            "description": "Successful get user profile",
+            "description": "200 (OK)",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "info": {
-                      "type": "object",
-                      "properties": {
-                        "success": {
-                          "type": "boolean",
-                          "example": true
-                        },
-                        "message": {
-                          "type": "string",
-                          "example": "Berhasil Mendapatkan Data Pengguna"
-                        }
-                      }
+                    "status": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Berhasil Login"
                     },
                     "data": {
                       "type": "object",
-                       "properties": {
-                          "id": {
-                            "type": "string",
-                            "example": "6d7c1ee0-2ea1-450d-ae3d-73750bcf960a"
-                          },
-                          "email": {
-                            "type": "string",
-                            "example": "johndoe@gmail.com"
-                          },
-                          "fullname": {
-                            "type": "string",
-                            "example": "John Doe"
-                          }
-                       }
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "d9ad783c-1890-4c27-b891-997af32c4dab"
+                        },
+                        "full_name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "johndoe@gmail.com"
+                        },
+                        "user_token": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some of input are empty",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "input cannot be empty"
                     }
                   }
                 }
@@ -307,28 +351,89 @@
             }
           },
           "401": {
-            "description": "User Not Found",
+            "description": "Invalid Email or Password",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "info": {
-                      "type": "object",
-                      "properties": {
-                        "success": {
-                          "type": "boolean",
-                          "example": false
-                        },
-                        "message": {
-                          "type": "string",
-                          "example": "Pengguna Tidak Ditemukan"
-                        }
-                      }
+                    "status": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "invalid email or password"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/create/admin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "(TEST) Create Admin User",
+        "description": "Create Admin User. For test only.",
+        "responses": {
+          "200": {
+            "description": "200 (OK)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Berhasil Login"
                     },
                     "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "d9ad783c-1890-4c27-b891-997af32c4dab"
+                        },
+                        "full_name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "johndoe@gmail.com"
+                        },
+                        "user_token": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some of input are empty",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
                       "type": "string",
-                      "example": null
+                      "example": "input cannot be empty"
                     }
                   }
                 }
