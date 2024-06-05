@@ -70,115 +70,117 @@
     }
   ],
   "paths": {
-  "/v1/login/customer": {
-    "post": {
-      "tags": ["Auth"],
-      "summary": "Customer login",
-      "description": "Successfully Customer logged in. Please store the token authentication credentials securely.",
-      "requestBody": {
-        "required": true,
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "full_name": {
-                  "type": "string",
-                  "format": "email",
-                  "example": "John Doe"
-                },
-                "email": {
-                  "type": "string",
-                  "format": "email",
-                  "example": "johndoe@gmail.com"
-                },
-                "password": {
-                  "type": "string",
-                  "format": "password",
-                  "example": "password123!"
-                }
-              },
-              "required": ["email", "password"]
-            }
-          }
-        }
-      },
-      "responses": {
-        "200": {
-          "description": "200 (OK)",
+    "/v1/login/customer": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Customer login",
+        "description": "Successfully Customer logged in. Please store the token authentication credentials securely.",
+        "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "status": {
-                    "type": "boolean",
-                    "example": true
-                  },
-                  "message": {
+                  "email": {
                     "type": "string",
-                    "example": "Berhasil Login"
+                    "format": "email",
+                    "example": "johndoe@gmail.com"
                   },
-                  "data": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "example": "d9ad783c-1890-4c27-b891-997af32c4dab"
-                      },
-                      "full_name": {
-                        "type": "string",
-                        "example": "John Doe"
-                      },
-                      "email": {
-                        "type": "string",
-                        "example": "johndoe@gmail.com"
-                      },
-                      "user_token": {
-                        "type": "string",
-                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "password123!"
+                  }
+                },
+                "required": [
+                  "email",
+                  "password",
+                  "full_name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200 (OK)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Berhasil Login"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "d9ad783c-1890-4c27-b891-997af32c4dab"
+                        },
+                        "full_name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "johndoe@gmail.com"
+                        },
+                        "user_token": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                        }
                       }
                     }
                   }
                 }
               }
             }
-          }
-        },
-        "400": {
-          "description": "Some of input are empty",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "status": {
-                    "type": "boolean",
-                    "example": true
-                  },
-                  "message": {
-                    "type": "string",
-                    "example": "input cannot be empty"
+          },
+          "400": {
+            "description": "Some of input are empty",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "input cannot be empty"
+                    }
                   }
                 }
               }
             }
-          }
-        },
-        "401": {
-          "description": "Invalid Email or Password",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "status": {
-                    "type": "boolean",
-                    "example": true
-                  },
-                  "message": {
-                    "type": "string",
-                    "example": "invalid email or password"
+          },
+          "401": {
+            "description": "Invalid Email or Password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "invalid email or password"
+                    }
                   }
                 }
               }
@@ -186,13 +188,14 @@
           }
         }
       }
-    }
-  },
+    },
     "/v1/register/customer": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Customer registration",
-        "description": "Register Customer",
+        "description": "Successfully Customer logged in. Please store the token authentication credentials securely.",
         "requestBody": {
           "required": true,
           "content": {
@@ -213,7 +216,11 @@
                     "example": "password123!"
                   }
                 },
-                "required": ["fullname", " email", "password"]
+                "required": [
+                  "fullname",
+                  " email",
+                  "password"
+                ]
               }
             }
           }
@@ -285,7 +292,9 @@
     },
     "/v1/login/admin": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Admin login",
         "description": "User Admin Login",
         "responses": {
@@ -375,7 +384,9 @@
     },
     "/v1/create/admin": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "(TEST) Create Admin User",
         "description": "Create Admin User. For test only.",
         "responses": {
@@ -442,8 +453,78 @@
           }
         }
       }
+    },
+    "/v1/customer/addresses": {
+      "get": {
+        "tags": [
+          "Address"
+        ],
+        "summary": "Get All Customer Addresses",
+        "description": "(Auth) Retrieve all Related Customer Addresses",
+        "responses": {
+          "200": {
+            "description": "200 (OK)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Berhasil Login"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "d9ad783c-1890-4c27-b891-997af32c4dab"
+                        },
+                        "full_name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "johndoe@gmail.com"
+                        },
+                        "user_token": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some of input are empty",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "input cannot be empty"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
-
-
   }
 }
